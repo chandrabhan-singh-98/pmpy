@@ -1,0 +1,10 @@
+# Sample pmpy configuration
+# Enjoy
+
+[OPTIONS]
+VCS = git
+Status = active
+ProjectDirectory = /home/canopy/projects/personal
+# Optional values : Default
+DatabaseFileLocation = /home/canopy/.cache/pm/db.json 
+Author = canopeerus

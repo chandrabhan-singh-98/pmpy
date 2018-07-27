@@ -1,0 +1,52 @@
+# pmpy
+
+## About
+
+`pmpy` is a small python script to act as a a project status manager and viewer.
+
+## Usage
+
+```
+pmpy [-ildhv] [ -m active,inactive,abandoned,complete]
+```
+
+### Supported Options:
+
+   `-i,--init` :  Initialization process to populate project database
+
+   `-d,--delete` : Delete the central database json file
+
+   `-h,--help` : Print usage help and all supported options
+
+   `-v,--version` : Print pmpy version info
+
+   `-m [active,inactive,abandoned,complete]` : Set project status
+
+### Configuration:
+
+`pmpy` uses an INI style configuration file to store options such as project location
+and VCS integration.
+
+## Architecture:
+
+`pmpy` uses simple JSON serialization to store information about projects and uses
+deserialization when required to read it.The project can optionally provide VCS integration
+given the appropriate dependent modules are installed.
+
+(I am well aware of how bad the code quality is, however this project was written in a 
+very short period and thus code performance and reliability was not of much significance
+given the purpose of this project.
+This script was originally intended to be used as a simply throwaway script to provide
+an at-a-glance look at my projects.
+
+## Installation:
+Grab the script from this repo and place it anywhere in your PATH with executable permissions.
+
+### Dependencies:
+* `python3`
+
+* `pygit2` (Optional)
+
+## License:
+
+Please refer to the LICENSE file in this repository.

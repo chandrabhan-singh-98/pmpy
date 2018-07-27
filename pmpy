@@ -1,0 +1,206 @@
+#!/usr/bin/env python3
+
+# ------------------------------------------------------------------------
+# A re-write of my original pm shell script in python
+
+# pm is a script that is meant to act as a status tracker
+# for my projects. It will
+# use VCS integration to provide in-depth information on all projects.
+# Cheers.
+
+# Author : canopeerus
+# License : MIT
+
+# ------------------------------------------------------------------------
+
+
+import os
+import sys
+import json
+import getopt
+import configparser
+
+# some global variable declarations for directory and file locations
+# will need to clean this up to not make these options hardcoded
+homedir = os.getenv("HOME")
+config_dir = homedir + "/.config/pm"
+config_fil = config_dir + "/config"
+
+# This is run everytime to read configuration values like project locations
+# Maybe this doesn't need to run everytime. We'll see later
+
+config = configparser.ConfigParser()
+config.read(config_fil)
+if config['OPTIONS']['DatabaseFileLocation'] == 'Default':
+    db_fil = homedir + "/.cache/pm/db.json"
+else:
+    db_fil = config['OPTIONS']['DatabaseFileLocation']
+
+dbdir = db_fil.strip("db.json")
+db_fil_old = db_fil + ".old"
+proj_dir = config['OPTIONS']['ProjectDirectory']
+
+class color:
+    BLUE  = "\033[1;34m"
+    CYAN  = "\033[1;36m"
+    GREEN = "\033[0;32m"
+    RESET = "\033[0;0m"
+    BOLD    = "\033[;1m"
+    REVERSE = "\033[;7m"
+    END = '\033[0m'
+    red='\033[31m'
+# function declarations
+
+# A function to write to stdout in a highly optimized manner.
+# The code is inspired by optimizations used in GNU yes.
+
+class pmpy_info_class:
+    version = '0.0.1'
+    name = 'pmpy'
+    license = 'MIT'
+    author = 'canopeerus'
+
+class misc_text_func:
+    def query_yes_no(self,question, default="yes"):
+        valid = {"yes": True, "y": True, "ye": True,
+             "no": False, "n": False}
+        if default is None:
+            prompt = " [y/n] "
+        elif default == "yes":
+            prompt = " [Y/n] "
+        elif default == "no":
+            prompt = " [y/N] "
+        else:
+            raise ValueError("invalid default answer: '%s'" % default)
+        while True:
+            sys.stdout.write(question + prompt)
+            choice = input().lower()
+            if default is not None and choice == '':
+                return valid[default]
+            elif choice in valid:
+                return valid[choice]
+            else:
+                sys.stdout.write("Please respond with 'yes' or 'no' "
+                             "(or 'y' or 'n').\n")
+
+    def print_help(self):
+        sys.stdout.write("usage : pm [-ildhv] [ -m active,inactive,abandoned,complete]\n")
+        sys.stdout.write("\nSupported options:\n")
+        sys.stdout.write("\t-i, --init          :   initialization process to populate project database\n")
+        sys.stdout.write("\t-d, --delete        :   Delete the central database json file\n")
+        sys.stdout.write("\t-h, --help          :   Print usage help\n")
+        sys.stdout.write("\t-v, --version       :   Print pmpy version info\n")
+        sys.stdout.write("\t-m <status_option>  :   Set project status\n")
+        sys.stdout.write("\tStatus options      :   active,inactive,abandoned,complete\n")
+        sys.stdout.write("\nThis project is hosted at https://github.com/canopeerus/pmpy\n")
+        sys.exit(1)
+
+    def print_version(self):
+        sys.stdout.write("pmpy version: "+pmpy_info_class.version+"\n")
+        sys.stdout.write("License: "+pmpy_info_class.license+"\n")
+        sys.stdout.write("Author: "+pmpy_info_class.author+"\n")
+
+class pm_write_database:
+    def delete_db_arg_func(self):
+        local_screen = misc_text_func()
+        if os.path.isfile(db_fil):
+            if local_screen.query_yes_no("Are you sure you want to delete the database?"):
+                os.remove(db_fil)
+                sys.stdout.write(color.GREEN+"Project database successfully deleted\n"+color.END)
+            else:
+                sys.stdout.write(color.red+"Operation aborted\n"+color.END)
+                sys.exit(1)
+        else:
+            sys.stdout.write("Database not found. Run pm -i to populate database.\n")
+
+    def backup(self,db_option = "current"):
+        if db_option == "old":
+            os.remove(db_fil_old)
+            os.rename(db_fil,db_fil_old)
+            os.remove(db_fil)
+        elif db_option == "current":
+            os.rename(db_fil,db_fil_old)
+
+    def pm_init(self):
+        if os.path.isfile(db_fil) and os.path.isfile(db_fil_old):
+            sys.stdout.write("There is a database file and a backup file already available!!\n")
+            user_choice_init = misc_text_func.query_yes_no("Delete old db and backup current db file?")
+            if user_choice_init:
+                self.backup("old")
+            else:
+                sys.stdout.write(color.red+"Operation aborted!\n"+color.END)
+                sys.exit(2)
+        elif os.path.isfile(db_fil):
+            sys.stdout.write("Found existing database file. Backing it up to db.json.old\n")
+            self.backup("current")
+        if not os.path.isdir(dbdir):
+            os.mkdir(dbdir)
+        sys.stdout.write("Beginnning pm init process...\n")
+        sys.stdout.write("Using projects location "+proj_dir+"\n")
+        all_p_files = os.listdir(proj_dir)
+        if len(all_p_files) == 0:
+            sys.stdout.write(color.red+"No project directories found in central code directory!!\n"+color.END)
+            sys.exit(3)
+        else:
+            db_file_out = open(db_fil,'w+')
+            proj_json_obj = {}
+            proj_json_obj['project']=[]
+            count = 0
+
+            for i in all_p_files:
+                if os.path.isdir(proj_dir+"/"+i):
+                    count += 1
+                    sys.stdout.write("\nShort description for "+i+" : ")
+                    s_desc = input()
+                    sys.stdout.write("project status for "+i+" : ")
+                    p_status = input()
+                    proj_json_obj['project'].append({
+                        'name':i,
+                        'status':p_status,
+                        'short_desc': s_desc,
+                        'author':'canopeerus'
+                        })
+            sys.stdout.write(color.GREEN+"\nFound "+str(count)+" projects\n")
+            json.dump(proj_json_obj,db_file_out)
+            db_file_out.close()
+            sys.stdout.write("Init process complete. Database created at "+db_fil+"\n"+color.END)
+
+def list_projects():
+    if not os.path.isfile(db_fil):
+        sys.stdout.write("Project database not found. Run pmpy -i to populate the database\n")
+    else:
+        p_file_in = open(db_fil,'r')
+        data_dict = json.load(p_file_in)
+        sys.stdout.write("Reading database..\n")
+        sys.stdout.write("Listing all "+str(len(data_dict['project']))+" projects.\n")
+        count = 1
+        for pname in data_dict['project']:
+            sys.stdout.write("* "+pname['name']+"\n")
+            count = count + 1
+        p_file_in.close()
+
+def main_func(argv):
+    screen = misc_text_func()
+    action = pm_write_database()
+    try:
+        options,args = getopt.getopt(argv,"hldivs",[])
+    except getopt.GetoptError:
+        sys.stdout.write(color.red + "pmpy : Unsupported option"+ color.END+"\n\n" )
+        screen.print_help()
+    if len(argv) == 0:
+        sys.stdout.write(color.red + "pmpy : No options specified\n\n" + color.END)
+        screen.print_help()
+    for opt,arg in options:
+        if opt == "-h":
+            screen.print_help()
+        elif opt == "-d":
+            action.delete_db_arg_func()
+            sys.exit(2)
+        elif opt == "-i":
+            action.pm_init()
+        elif opt  == "-v":
+            screen.print_version()
+        elif opt  == "-l":
+            list_projects()
+
+main_func(sys.argv[1:])
