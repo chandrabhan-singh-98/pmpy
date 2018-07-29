@@ -2,7 +2,7 @@
 
 ## About
 
-`pmpy` is a small python script to act as a a project status manager and viewer.
+`pmpy` is a small python script to act as a a project status tracker and viewer.
 
 ## Usage
 
