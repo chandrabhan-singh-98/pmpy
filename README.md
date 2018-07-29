@@ -53,9 +53,9 @@ Grab the script from this repo and place it anywhere in your PATH with executabl
 
 ## To-do
 
-* Implement list all projects option(`pmpy -l`)
+* ~~Implement list all projects option(`pmpy -l`)~~
 
-* Implement show individual project details(`pmpy -s`)
+* ~~Implement show individual project details(`pmpy -s`)~~
 
 * Implement update database option(`pmpy -u`)
 
