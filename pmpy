@@ -90,12 +90,12 @@ class misc_text_func:
     def print_help(self):
         sys.stdout.write("usage : pm [-ildhv] [ -m active,inactive,abandoned,complete]\n")
         sys.stdout.write("\nSupported options:\n")
-        sys.stdout.write("\t-i, --init          :   initialization process to populate project database\n")
-        sys.stdout.write("\t-d, --delete        :   Delete the central database json file\n")
-        sys.stdout.write("\t-h, --help          :   Print usage help\n")
-        sys.stdout.write("\t-v, --version       :   Print pmpy version info\n")
-        sys.stdout.write("\t-m <status_option>  :   Set project status\n")
-        sys.stdout.write("\tStatus options      :   active,inactive,abandoned,complete\n")
+        sys.stdout.write("\t-i              :   initialization process to populate project database\n")
+        sys.stdout.write("\t-d              :   Delete the central database json file\n")
+        sys.stdout.write("\t-h              :   Print usage help\n")
+        sys.stdout.write("\t-v              :   Print pmpy version info\n")
+        sys.stdout.write("\t-m              :   Set project status\n")
+        sys.stdout.write("\tStatus options  :   active,inactive,abandoned,complete\n")
         sys.stdout.write("\nThis project is hosted at https://github.com/canopeerus/pmpy\n")
         sys.exit(1)
 

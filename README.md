@@ -12,13 +12,13 @@ pmpy [-ildhv] [ -m active,inactive,abandoned,complete]
 
 ### Supported Options:
 
-   `-i,--init` :  Initialization process to populate project database
+   `-i` :  Initialization process to populate project database
 
-   `-d,--delete` : Delete the central database json file
+   `-d` : Delete the central database json file
 
-   `-h,--help` : Print usage help and all supported options
+   `-h` : Print usage help and all supported options
 
-   `-v,--version` : Print pmpy version info
+   `-v` : Print pmpy version info
 
    `-m [active,inactive,abandoned,complete]` : Set project status
 
