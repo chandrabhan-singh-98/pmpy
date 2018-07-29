@@ -44,7 +44,13 @@ This script was originally intended to be used as a simply throwaway script to p
 an at-a-glance look at my projects.
 
 ## Installation:
-Grab the script from this repo and place it anywhere in your PATH with executable permissions.
+Clone the repository and install using the following instructions
+
+```
+git clone https://github.com/canopeerus/pmpy
+cd pmpy
+make install-all
+```
 
 ### Dependencies:
 * `python3`
