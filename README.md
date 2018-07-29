@@ -22,6 +22,10 @@ pmpy [-ildhv] [ -m active,inactive,abandoned,complete]
 
    `-m [active,inactive,abandoned,complete]` : Set project status
 
+   `-s` : Show detailed information of one or all projects
+
+   `-l` : List names of all projects
+
 ### Configuration:
 
 `pmpy` uses an INI style configuration file to store options such as project location
