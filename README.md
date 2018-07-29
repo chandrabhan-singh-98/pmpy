@@ -47,6 +47,14 @@ Grab the script from this repo and place it anywhere in your PATH with executabl
 
 * `pygit2` (Optional)
 
+## To-do
+
+* Implement list all projects option(`pmpy -l`)
+
+* Implement show individual project details(`pmpy -s`)
+
+* Implement update database option(`pmpy -u`)
+
 ## License:
 
 Please refer to the LICENSE file in this repository.
