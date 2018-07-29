@@ -8,6 +8,10 @@
 # use VCS integration to provide in-depth information on all projects.
 # Cheers.
 
+# The quality of code is extremely bad. I'm not a python programmer
+# and this script is solely meant to be used by me but is extensible
+# for other users as well at your own risk obviously.
+
 # Author : canopeerus
 # License : MIT
 
@@ -123,8 +127,9 @@ class pm_write_database:
 
     def pm_init(self):
         if os.path.isfile(db_fil) and os.path.isfile(db_fil_old):
+            local_screen = misc_text_func()
             sys.stdout.write("There is a database file and a backup file already available!!\n")
-            user_choice_init = misc_text_func.query_yes_no("Delete old db and backup current db file?")
+            user_choice_init = local_screen.query_yes_no("Delete old db and backup current db file?")
             if user_choice_init:
                 self.backup("old")
             else:
