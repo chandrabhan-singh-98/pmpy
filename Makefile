@@ -5,7 +5,7 @@ CONF=config
 CONFDIR=$(HOME)/.config/pm
 
 all:
-	echo 'run make install to install'
+	@echo 'run make install to install'
 package:
 	rm -rf pmpy.tar.gz
 	tar -zcvf pmpy.tar.gz * 
