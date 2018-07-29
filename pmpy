@@ -170,23 +170,26 @@ class pm_write_database:
             db_file_out.close()
             sys.stdout.write("Init process complete. Database created at "+db_fil+"\n"+color.END)
 
-def list_projects():
-    if not os.path.isfile(db_fil):
-        sys.stdout.write("Project database not found. Run pmpy -i to populate the database\n")
-    else:
-        p_file_in = open(db_fil,'r')
-        data_dict = json.load(p_file_in)
-        sys.stdout.write("Reading database..\n")
-        sys.stdout.write("Listing all "+str(len(data_dict['project']))+" projects.\n")
-        count = 1
-        for pname in data_dict['project']:
-            sys.stdout.write("* "+pname['name']+"\n")
-            count = count + 1
-        p_file_in.close()
+# This lists all projects in the database
+class pm_read_database:
+    def list_projects():
+        if not os.path.isfile(db_fil):
+            sys.stdout.write("Project database not found. Run pmpy -i to populate the database\n")
+        else:
+            p_file_in = open(db_fil,'r')
+            data_dict = json.load(p_file_in)
+            sys.stdout.write("Reading database..\n")
+            sys.stdout.write("Listing all "+str(len(data_dict['project']))+" projects.\n")
+            count = 1
+            for pname in data_dict['project']:
+                sys.stdout.write("* "+pname['name']+"\n")
+                count = count + 1
+            p_file_in.close()
 
 def main_func(argv):
     screen = misc_text_func()
-    action = pm_write_database()
+    write_db = pm_write_database()
+    read_db = pm_read_database()
     try:
         options,args = getopt.getopt(argv,"hldivs",[])
     except getopt.GetoptError:
@@ -199,13 +202,13 @@ def main_func(argv):
         if opt == "-h":
             screen.print_help()
         elif opt == "-d":
-            action.delete_db_arg_func()
+            write_db.delete_db_arg_func()
             sys.exit(2)
         elif opt == "-i":
-            action.pm_init()
+            write_db.pm_init()
         elif opt  == "-v":
             screen.print_version()
         elif opt  == "-l":
-            list_projects()
+            read_db.list_projects()
 
 main_func(sys.argv[1:])
