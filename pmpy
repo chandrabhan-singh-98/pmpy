@@ -102,9 +102,9 @@ class misc_text_func:
                         "\t-v              :   Print pmpy version info\n"+
                         "\t-m              :   Set project status\n"+
                         "\t-s              :   Show detailed project information for one or all projects\n"+
-                        "\t-l              :   List the names of all projects\n"
-                        "\tStatus options  :   active,inactive,abandoned,complete\n"+
-                        "This project is hosted at https://github.com/canopeerus/pmpy\n")
+                        "\t-l              :   List the names of all projects\n"+
+                        "Status options  :   active,inactive,abandoned,complete\n"+
+                        "\nThis project is hosted at https://github.com/canopeerus/pmpy\n")
         sys.exit(1)
 
     def print_version(self):
@@ -165,7 +165,7 @@ class pm_write_database:
                     count += 1
                     sys.stdout.write("\nShort description for "+i+" : ")
                     s_desc = input()
-                    sys.stdout.write("project status for "+i+" : ")
+                    sys.stdout.write("Project status for "+i+" [active,inactive,complete,abandoned]: ")
                     p_status = input()
                     proj_json_obj['project'].append({
                         'name':i,
@@ -173,7 +173,7 @@ class pm_write_database:
                         'short_desc': s_desc,
                         'author':'canopeerus'
                         })
-            sys.stdout.write(color.FG_GREENN+"\nFound "+str(count)+" projects\n")
+            sys.stdout.write(color.FG_GREEN+"\nFound "+str(count)+" projects\n")
             json.dump(proj_json_obj,db_file_out)
             db_file_out.close()
             sys.stdout.write("Init process complete. Database created at "+db_fil+"\n"+color.END)
@@ -189,7 +189,7 @@ class pm_read_database:
             for pname in data_dict['project']:
                 sys.stdout.write(pname['name']+"\n")
             p_file_in.close()
-    
+
     def set_p_status_colour(self,pstatus) -> str:
         if pstatus == "active":
             return color.BG_GREEN + color.FG_BLACK + pstatus + color.END
@@ -226,7 +226,7 @@ class pm_read_database:
 
 
             sys.stdout.write("No matching project found for "+name+"\n")
-                
+
 
 
 
