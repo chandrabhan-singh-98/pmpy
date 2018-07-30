@@ -1,4 +1,4 @@
-PREFIX=$(HOME)/.local
+PREFIX=/usr/local
 BINDIR=$(PREFIX)/bin
 OBIN=pmpy
 CONF=config
