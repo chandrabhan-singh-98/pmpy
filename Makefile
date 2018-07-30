@@ -12,7 +12,7 @@ package:
 install:
 	install -Dm755 $(OBIN) $(BINDIR)/$(OBIN)
 	install -D $(CONF) $(CONFDIR)/$(CONF)
-	install -D pmpy-bash-completion /usr/share/bash-completion/completions/pmpy
+	install -D bash-completion /usr/share/bash-completion/completions/pmpy
 
 uninstall:
 	rm -f $(BINDIR)/$(OBIN)
