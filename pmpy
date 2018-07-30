@@ -222,11 +222,16 @@ class pm_read_database:
                             "Author             :   "+pname['author']+"\n"+
                             "Short description  :   "+pname['short_desc']+"\n"
                             "Status             :   "+self.set_p_status_colour(pname['status'])+"\n")
-                    sys.exit(3)
-
-
+                        sys.exit(3)
             sys.stdout.write("No matching project found for "+name+"\n")
 
+        def interactive_update(self,name):
+            if not os.path.isfile(db_fil):
+                sys.stdout.write("Project database not found.Run pmpy -i to populate the database\n")
+            else:
+                sys.stdout.write("Interactive editor initiated\n"+
+                        "Change 1.Name/ 2.Author/ 3.Short description/ 4.Author : ")
+                num_choice = input()
 
 
 
@@ -235,7 +240,7 @@ def main_func(argv):
     write_db = pm_write_database()
     read_db = pm_read_database()
     try:
-        options,args = getopt.getopt(argv,"hldivs:",["help","list","delete","init","version","show="])
+        options,args = getopt.getopt(argv,"hldivm:s:",["help","list","delete","init","version","show="])
     except getopt.GetoptError as err:
         sys.stdout.write(color.FG_RED + "pmpy : " + str(err) + color.END+"\n" )
         screen.print_help()
@@ -257,6 +262,8 @@ def main_func(argv):
         elif opt in ("-s","--show"):
             proj_arg = arg
             read_db.show_single_project(proj_arg)
+        elif opt == "-m":
+            write_db.interactive_update(arg)
 
 if __name__ == "__main__":
     main_func(sys.argv[1:])
