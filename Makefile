@@ -8,10 +8,11 @@ all:
 	@echo 'run make install to install'
 package:
 	rm -rf pmpy.tar.gz
-	tar -zcvf pmpy.tar.gz * 
+	tar -zcvf pmpy.tar.gz *
 install-all:
 	install -Dm755 $(OBIN) $(BINDIR)/$(OBIN)
 	install -D $(CONF) $(CONFDIR)/$(CONF)
+	install -D pmpy-bash-completion /usr/share/bash-completion/completions/pmpy
 install-conf:
 	install -D $(CONF) $(CONFDIR)/$(CONF)
 
