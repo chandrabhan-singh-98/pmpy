@@ -1,6 +1,7 @@
 PREFIX=/usr/local
 BINDIR=$(PREFIX)/bin
 OBIN=pmpy
+SRC=pm.py
 CONF=config
 CONFDIR=$(HOME)/.config/pm
 
@@ -10,7 +11,7 @@ package:
 	rm -rf pmpy.tar.gz
 	tar -zcvf pmpy.tar.gz *
 install:
-	install -Dm755 $(OBIN) $(BINDIR)/$(OBIN)
+	install -Dm755 $(SRC) $(BINDIR)/$(OBIN)
 	install -D $(CONF) $(CONFDIR)/$(CONF)
 
 uninstall:
