@@ -101,7 +101,7 @@ class misc_text_func:
                         "\t-h              :   Print usage help\n"+
                         "\t-v              :   Print pmpy version info\n"+
                         "\t-m              :   Set project status\n"+
-                        "\t-s              :   Show detailed project information for one or all projects\n"+
+                        "\t-s <name>       :   Show detailed project information for one or all projects\n"+
                         "\t-l              :   List the names of all projects\n"+
                         "Status options  :   active,inactive,abandoned,complete\n"+
                         "\nThis project is hosted at https://github.com/canopeerus/pmpy\n")
@@ -253,7 +253,9 @@ def main_func(argv):
             proj_arg = arg
             read_db.show_single_project(proj_arg)
         elif opt == "-m":
-            sys.stdout.write("Updating is not supported at the moment. Run pmpy -d and and pmpy -i again to reinitiate with changes.\n")
+            sys.stdout.write("Updating is not supported at the moment.\nRun pmpy -di to reinitiate with changes.\n")
+        else:
+            assert False
 
 if __name__ == "__main__":
     main_func(sys.argv[1:])
