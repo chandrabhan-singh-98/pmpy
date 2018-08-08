@@ -1,28 +1,25 @@
 #!/usr/bin/env python3
 
-# ------------------------------------------------------------------------
-# A re-write of my original pm shell script in python
+"""
+ ------------------------------------------------------------------------
+ A re-write of my original pm shell script in python
 
-# pm is a script that is meant to act as a status tracker
-# for my projects. It will
-# use VCS integration to provide in-depth information on all projects.
-# Cheers.
+ pm is a script that is meant to act as a status tracker
+ for my projects. It will
+ use VCS integration to provide in-depth information on all projects.
+ Cheers.
 
-# The quality of code is extremely bad. I'm not a python programmer
-# and this script is solely meant to be used by me but is extensible
-# for other users as well at your own risk obviously.
+ The quality of code is extremely bad. I'm not a python programmer
+ and this script is solely meant to be used by me but is extensible
+ for other users as well at your own risk obviously.
 
-# Author : canopeerus
-# License : MIT
+ Author : canopeerus
+ License : MIT
 
-# ------------------------------------------------------------------------
+ ------------------------------------------------------------------------
+"""
 
-
-import os
-import sys
-import json
-import getopt
-import configparser
+import os,sys,json,getopt,configparser,pygit2
 
 # some global variable declarations for directory and file locations
 # will need to clean this up to not make these options hardcoded
