@@ -56,6 +56,7 @@ class color:
     BG_GREEN = '\033[42m'
     BG_BLUE = '\033[46m'
     BG_GREY = '\033[47m'
+    ULINE = '\033[4m'
 
 class pmpy_info_class:
     version = '0.0.1'
@@ -164,7 +165,8 @@ class pm_write_database:
                         'name':i,
                         'status':p_status,
                         'short_desc': s_desc,
-                        'author':'canopeerus'
+                        'author':'canopeerus',
+                        'location':proj_dir+"/"+i
                         })
             sys.stdout.write(color.FG_GREEN+"\nFound "+str(count)+" projects\n")
             json.dump(proj_json_obj,db_file_out)
@@ -193,6 +195,10 @@ class pm_read_database:
             return color.BG_GREEN + color.FG_BLACK + pstatus + color.END
 
     def show_single_project(self,name):
+        """
+        despite the misleading name this function will print out all projects too if
+        you pass the all argument
+        """
         if not os.path.isfile(db_fil):
             sys.stdout.write("Project database not found.Run pmpy -i to populate the database\n")
         else:
@@ -203,17 +209,19 @@ class pm_read_database:
                     sys.stdout.write(
                         "Name               :   "+pname['name'] +"\n"+
                         "Author             :   "+pname['author']+"\n"+
-                        "Short description  :   "+pname['short_desc']+"\n"
-                        "Status             :   "+self.set_p_status_colour(pname['status'])+"\n\n")
+                        "Short description  :   "+pname['short_desc']+"\n"+
+                        "Status             :   "+self.set_p_status_colour(pname['status'])+"\n"+
+                        "Location           :   "+color.ULINE+pname['location']+color.END+"\n\n")
                 sys.exit(3)
             else:
                 for pname in data_dict['project']:
                     if name == pname['name']:
                         sys.stdout.write(
-                            "Name               :   "+pname['name'] +"\n"+
-                            "Author             :   "+pname['author']+"\n"+
-                            "Short description  :   "+pname['short_desc']+"\n"
-                            "Status             :   "+self.set_p_status_colour(pname['status'])+"\n")
+                                "Name               :   "+pname['name']+"\n"+
+                                "Author             :   "+pname['author']+"\n"+
+                                "Short description  :   "+pname['short_desc']+"\n"+
+                                "Status             :   "+self.set_p_status_colour(pname['status'])+"\n"+
+                                "Location           :   "+color.ULINE+pname['location']+color.END+"\n")
                         sys.exit(3)
             sys.stdout.write("No matching project found for "+name+"\n")
 
