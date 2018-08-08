@@ -59,10 +59,6 @@ class color:
     BG_GREEN = '\033[42m'
     BG_BLUE = '\033[46m'
     BG_GREY = '\033[47m'
-# function declarations
-
-# A function to write to stdout in a highly optimized manner.
-# The code is inspiRED by optimizations used in GNU yes.
 
 class pmpy_info_class:
     version = '0.0.1'
@@ -118,7 +114,7 @@ class pm_write_database:
         if os.path.isfile(db_fil):
             if local_screen.query_yes_no("Are you sure you want to delete the database?"):
                 os.remove(db_fil)
-                sys.stdout.write(color.FG_GREENN+"Project database successfully deleted\n"+color.END)
+                sys.stdout.write(color.FG_GREEN+"Project database successfully deleted\n"+color.END)
             else:
                 sys.stdout.write(color.FG_RED+"Operation aborted\n"+color.END)
                 sys.exit(1)
@@ -178,7 +174,6 @@ class pm_write_database:
             db_file_out.close()
             sys.stdout.write("Init process complete. Database created at "+db_fil+"\n"+color.END)
 
-# This lists all projects in the database
 class pm_read_database:
     def list_projects(self) -> bool:
         if not os.path.isfile(db_fil):
