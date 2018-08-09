@@ -8,3 +8,7 @@ ProjectDirectory = /home/canopy/projects/personal
 # Optional values : Default
 DatabaseFileLocation = /home/canopy/.cache/pm/db.json 
 Author = canopeerus
+[core]
+	bare = true
+	repositoryformatversion = 0
+	filemode = true
