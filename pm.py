@@ -19,7 +19,7 @@
  ------------------------------------------------------------------------
 """
 
-import os,sys,json,getopt,configparser,pygit2
+import os,sys,json,getopt,configparser
 
 # some global variable declarations for directory and file locations
 # will need to clean this up to not make these options hardcoded
@@ -207,11 +207,11 @@ class pm_read_database:
             if name == "all":
                 for pname in data_dict['project']:
                     sys.stdout.write(
-                        "Name               :   "+pname['name'] +"\n"+
-                        "Author             :   "+pname['author']+"\n"+
-                        "Short description  :   "+pname['short_desc']+"\n"+
-                        "Status             :   "+self.set_p_status_colour(pname['status'])+"\n"+
-                        "Location           :   "+color.ULINE+pname['location']+color.END+"\n\n")
+                            "Name               :   "+pname['name']+"\n"+
+                            "Author             :   "+pname['author']+"\n"+
+                            "Short description  :   "+pname['short_desc']+"\n"+
+                            "Status             :   "+self.set_p_status_colour(pname['status'])+"\n"+
+                            "Location           :   "+color.ULINE+pname['location']+color.END+"\n\n")
                 sys.exit(3)
             else:
                 for pname in data_dict['project']:
