@@ -49,7 +49,7 @@ Clone the repository and install using the following instructions
 ```
 git clone https://github.com/canopeerus/pmpy
 cd pmpy
-make install-all
+make install
 ```
 
 ### Dependencies:
@@ -65,6 +65,5 @@ make install-all
 
 * Implement update database option(`pmpy -u`)
 
-## License:
-
-Please refer to the LICENSE file in this repository.
+## License
+[LICENSE](./LICENSE)
