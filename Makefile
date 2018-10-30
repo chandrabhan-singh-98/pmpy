@@ -1,3 +1,5 @@
+# Makefile for project pmpy
+
 PREFIX=/usr/local
 BINDIR=$(PREFIX)/bin
 OBIN=pmpy
