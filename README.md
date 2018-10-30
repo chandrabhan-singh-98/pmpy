@@ -55,8 +55,6 @@ make install
 ### Dependencies:
 * `python3`
 
-* `pygit2` (Optional)
-
 ## To-do
 
 * ~~Implement list all projects option(`pmpy -l`)~~
