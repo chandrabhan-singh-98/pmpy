@@ -41,6 +41,7 @@ dbdir = db_fil.strip("db.json")
 db_fil_old = db_fil + ".old"
 proj_dir = config['OPTIONS']['ProjectDirectory']
 
+# Class declaration for color codes and the like
 class color:
     FG_BLUE  = "\033[1;34m"
     FG_CYAN  = "\033[1;36m"
